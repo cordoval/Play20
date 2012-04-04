@@ -20,7 +20,8 @@ class JavaGlobalSettingsAdapter(val underlying: play.GlobalSettings) extends Glo
   }
 
   override def onRouteRequest(request: RequestHeader): Option[Handler] = {
-    super.onRouteRequest(request)
+    val jrequest = JavaHelpers.createJavaRequest(request)
+    Option(underlying.onRouteRequest(jrequest)).map(r => Some(Action{r.getWrappedResult})).getOrElse(super.onRouteRequest(request))
   }
 
   override def onError(request: RequestHeader, ex: Throwable): Result = {

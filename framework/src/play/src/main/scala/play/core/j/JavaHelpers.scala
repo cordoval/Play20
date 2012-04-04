@@ -50,7 +50,17 @@ trait JavaHelpers {
    * @param request
    */
   def createJavaContext(req: RequestHeader): JContext = {
-    new JContext(new JRequest {
+    new JContext(createJavaRequest(req),
+      req.session.data.asJava,
+      req.flash.data.asJava)
+  }
+
+  /**
+   * converts a scala RequestHeader to a Java Request
+   * @param request
+   */
+  def createJavaRequest(req: RequestHeader): JRequest = {
+    new JRequest {
 
       def uri = req.uri
 
@@ -77,11 +87,8 @@ trait JavaHelpers {
 
       override def toString = req.toString
 
-    },
-      req.session.data.asJava,
-      req.flash.data.asJava)
+    }
   }
-
   /**
    * creates a java context from a scala Request[RequestBody]
    * @param request

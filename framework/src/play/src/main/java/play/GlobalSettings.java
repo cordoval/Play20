@@ -60,6 +60,17 @@ public class GlobalSettings {
     }
 
     /**
+    * Called when an HTTP request has been received.
+    *
+    * The default is to use the application router to find the appropriate action (return null)
+    *
+    * @param request the HTTP request (without the body)
+    * @return wrapped Result
+    */
+    public Result onRouteRequest(Request request) {
+        return null;
+    }
+    /**
      * Triggered when a resource was requested but not found. The default implementation returns <code>null</code>, so that
      * the Scala engine handles the <code>onActionNotFound</code>.
      *
